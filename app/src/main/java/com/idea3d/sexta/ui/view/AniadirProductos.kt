@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.idea3d.sexta.R
-import com.idea3d.sexta.databinding.FragmentMainBinding
+import com.idea3d.sexta.databinding.FragmentAniadirProductosBinding
+import com.idea3d.sexta.databinding.FragmentEditarListaBinding
 import com.idea3d.sexta.databinding.FragmentNuevaListaBinding
 
-class NuevaLista : Fragment() {
 
-    private var _binding: FragmentNuevaListaBinding? = null
+class AniadirProductos : Fragment() {
+
+    private var _binding: FragmentAniadirProductosBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,17 +27,16 @@ class NuevaLista : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentNuevaListaBinding.inflate(inflater, container, false)
+        _binding = FragmentAniadirProductosBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.botonCrear.setOnClickListener {
+        binding.botonHecho.setOnClickListener {
             findNavController().navigate(R.id.editarLista)
         }
 
     }
-
 }

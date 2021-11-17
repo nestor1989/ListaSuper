@@ -13,10 +13,30 @@
         <action
             android:id="@+id/action_mainFragment_to_nuevaLista"
             app:destination="@id/nuevaLista" />
+        <action
+            android:id="@+id/action_mainFragment_to_editarLista"
+            app:destination="@id/editarLista" />
     </fragment>
     <fragment
         android:id="@+id/nuevaLista"
         android:name="com.idea3d.sexta.ui.view.NuevaLista"
         android:label="crear lista"
-        tools:layout="@layout/fragment_nueva_lista" />
+        tools:layout="@layout/fragment_nueva_lista">
+        <action
+            android:id="@+id/action_nuevaLista_to_crearLista"
+            app:destination="@id/editarLista" />
+    </fragment>
+    <fragment
+        android:id="@+id/editarLista"
+        android:name="com.idea3d.sexta.ui.view.EditarLista"
+        android:label="Editar Lista"
+        tools:layout="@layout/fragment_editar_lista">
+        <action
+            android:id="@+id/action_crearLista_to_aniadirProductos"
+            app:destination="@id/aniadirProductos" />
+    </fragment>
+    <fragment
+        android:id="@+id/aniadirProductos"
+        android:name="com.idea3d.sexta.ui.view.AniadirProductos"
+        android:label="Añadir productos" />
 </navigation>
