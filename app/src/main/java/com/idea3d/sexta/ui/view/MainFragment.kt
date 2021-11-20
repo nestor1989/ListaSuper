@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,9 +17,12 @@ import com.idea3d.sexta.R
 import com.idea3d.sexta.core.TaskApp
 import com.idea3d.sexta.data.model.Task
 import com.idea3d.sexta.databinding.FragmentMainBinding
+import com.idea3d.sexta.ui.adapters.TasksAdapter
+import com.idea3d.sexta.ui.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.nio.channels.Selector
 
 class MainFragment : Fragment() {
 
@@ -27,6 +31,8 @@ class MainFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var tasks: MutableList<Task>
     lateinit var adapter: TasksAdapter
+    private lateinit var taskSelector: Selector
+    private val model: SharedViewModel by activityViewModels()
 
     //
 
@@ -86,7 +92,7 @@ class MainFragment : Fragment() {
                 tasks.add(recoveryTask)
                 adapter.notifyItemInserted(tasks.size)
                 clearFocus()
-                //hideKeyboard()
+
             }
         }
     }
@@ -94,10 +100,7 @@ class MainFragment : Fragment() {
     fun clearFocus(){
         etTask.setText("")
     }
-    /*fun hideKeyboard() {
-        val inputMethodManager = getSystemService(Fragment.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
-    }*/
+
 
     fun updateTask(task: Task) {
         doAsync {

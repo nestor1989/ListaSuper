@@ -1,12 +1,8 @@
-package com.idea3d.sexta.ui.view
+package com.idea3d.sexta.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.idea3d.sexta.R
 import com.idea3d.sexta.data.model.Task
 import com.idea3d.sexta.databinding.ItemTaskBinding
 

@@ -1,6 +1,7 @@
-package com.idea3d.sexta.data.model
+package com.idea3d.sexta.domain
 
 import androidx.room.*
+import com.idea3d.sexta.data.model.Task
 
 @Dao
 interface TaskDao {
@@ -8,7 +9,7 @@ interface TaskDao {
     fun getAll():MutableList<Task>
 
     @Query("SELECT * FROM Task where id like :id")
-    fun getById(id:Long):Task
+    fun getById(id:Long): Task
 
     @Insert
     fun addTask(taskEntity : Task):Long
