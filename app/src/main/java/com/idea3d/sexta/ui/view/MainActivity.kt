@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModels<SharedViewModel>{VMFactory(RepoImp(DataSource()))}
+    //private val viewModel by viewModels<SharedViewModel>{VMFactory(RepoImp(DataSource()))}
 //   se podría añadir cómo @Inject con Dagger
 
    private lateinit var navController: NavController
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         //navController = findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
 
         /*lifecycleScope.launch{
             val task = app.room.taskDao().GetAll()

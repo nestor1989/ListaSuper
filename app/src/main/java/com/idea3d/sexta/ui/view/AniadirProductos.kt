@@ -5,19 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.idea3d.sexta.R
 import com.idea3d.sexta.core.TaskApp
 import com.idea3d.sexta.data.model.Art
-import com.idea3d.sexta.data.model.Task
+import com.idea3d.sexta.data.model.DataSource
+import com.idea3d.sexta.data.model.RepoImp
+
 import com.idea3d.sexta.databinding.FragmentAniadirProductosBinding
-import com.idea3d.sexta.databinding.FragmentEditarListaBinding
-import com.idea3d.sexta.databinding.FragmentNuevaListaBinding
+
 import com.idea3d.sexta.ui.adapters.ArtsAdapter
-import com.idea3d.sexta.ui.adapters.TasksAdapter
-import kotlinx.android.synthetic.main.fragment_main.*
+
+import com.idea3d.sexta.ui.viewmodel.SharedViewModel
+import com.idea3d.sexta.ui.viewmodel.VMFactory
+
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -29,6 +33,8 @@ class AniadirProductos : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var arts: MutableList<Art>
     lateinit var adapter: ArtsAdapter
+    private val viewModel by activityViewModels<SharedViewModel> {
+        VMFactory(RepoImp(DataSource())) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +68,7 @@ class AniadirProductos : Fragment() {
 
     fun getArts() {
         doAsync {
-            arts = TaskApp.databaseArt.artDao().getAll()
+            arts = TaskApp.database.taskDao().getAllArt()
             uiThread {
                 setUpRecyclerView(arts)
             }
@@ -80,8 +86,8 @@ class AniadirProductos : Fragment() {
 
     fun addArt(art: Art) {
         doAsync {
-            val id = TaskApp.databaseArt.artDao().addArt(art)
-            val recoveryArt = TaskApp.databaseArt.artDao().getById(id)
+            val id = TaskApp.database.taskDao().addArt(art)
+            val recoveryArt = TaskApp.database.taskDao().getArtById(id)
             uiThread {
                 arts.add(recoveryArt)
                 adapter.notifyItemInserted(arts.size)
@@ -99,14 +105,14 @@ class AniadirProductos : Fragment() {
     fun updateArt(art: Art) {
         doAsync {
             art.isDone = !art.isDone
-            TaskApp.databaseArt.artDao().updateArt(art)
+            TaskApp.database.taskDao().updateArt(art)
         }
     }
 
     fun deleteArt(art: Art){
         doAsync {
             val position = arts.indexOf(art)
-            TaskApp.databaseArt.artDao().deleteArt(art)
+            TaskApp.database.taskDao().deleteArt(art)
             arts.remove(art)
             uiThread {
                 adapter.notifyItemRemoved(position)

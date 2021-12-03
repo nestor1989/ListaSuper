@@ -1,12 +1,17 @@
 package com.idea3d.sexta.data.model
 
-import com.idea3d.sexta.vo.Resource
+import com.idea3d.sexta.core.TaskApp
 
-class DataSource {
-    private val generateTask = mutableListOf<Task>()
+class DataSource() {
 
 
-    fun getTaskRes(): Resource<MutableList<Task>> {
-        return Resource.Success(generateTask)
+     fun getTaskRes(task: Task) {
+        TaskApp.database.taskDao().addTask(task)
     }
+
+
+     fun insertArt(art: Art){
+        TaskApp.database.taskDao().addArt(art)
+    }
+
 }

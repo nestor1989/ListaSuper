@@ -11,30 +11,8 @@
         android:id="@+id/rvTask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rlAddTask" />
-    <RelativeLayout
-        android:id="@+id/rlAddTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_margin="10dp"
-        android:background="@android:color/white">
+         />
 
-        <EditText
-            android:id="@+id/etTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/btnAddTask"
-            android:hint="añade una tarea" />
-
-        <Button
-            android:id="@+id/btnAddTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Añadir" />
-    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

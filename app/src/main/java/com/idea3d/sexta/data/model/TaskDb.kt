@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.idea3d.sexta.domain.TaskDao
 
 @Database(
-    entities= [Task::class],
+    entities= [Task::class, Art::class],
     version=1
 )
 abstract class TaskDb:RoomDatabase() {
