@@ -16,34 +16,25 @@ val allTask: MutableLiveData<Task> by lazy {
     MutableLiveData<Task>()
 }
 
- fun addTask(task: Task){
-    viewModelScope.launch{
+    fun addTask(task: Task){
         repo.addTask(task)
     }
-}
 
-fun addArt(art: Art){
-    viewModelScope.launch{
+    fun addArt(art: Art){
         repo.addArt(art)
     }
-}
 
 
     fun addTasks(task: Task){
-    viewModelScope.launch {
         repo.addTasks(task)
-        }
     }
 
     fun updateTask(task: Task){
-        viewModelScope.launch {
             repo.updateTask(task)
-        }
+
     }
     fun deleteTask(task: Task){
-        viewModelScope.launch {
             repo.deleteTask(task)
-        }
     }
 
 

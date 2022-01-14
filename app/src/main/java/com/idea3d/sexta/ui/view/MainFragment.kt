@@ -36,8 +36,8 @@ class MainFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var tasks: MutableList<Task>
     lateinit var adapter: TasksAdapter
-
     lateinit var task:Task
+
     private val viewModel by activityViewModels<SharedViewModel>{
         VMFactory(RepoImp(DataSource())) }
 
@@ -64,6 +64,8 @@ class MainFragment : Fragment() {
        viewModel.allTask.observe(this, Observer {
             // Update the cached copy of the words in the adapter.
             tasks?.let { adapter.submitList(it) }
+
+
         })
 
 
