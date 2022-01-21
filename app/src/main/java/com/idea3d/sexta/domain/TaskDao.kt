@@ -10,38 +10,38 @@ import com.idea3d.sexta.data.model.TaskYArts
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM Task")
-    suspend fun getAll(): MutableList<Task>
+    suspend fun getAllTask(): List<Task>
 
     @Query("SELECT * FROM Task where taskId like :id")
-    fun getById(id:Long): Task
+    suspend fun getById(id:Long): Task
 
-    @Insert
-    fun addTask(taskEntity : Task):Long
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addTask(taskEntity : Task):Long
 
     @Update
-    fun updateTask(taskEntity: Task):Int
+    suspend fun updateTask(taskEntity: Task):Int
 
     @Delete
-    fun deleteTask(taskEntity: Task):Int
+    suspend fun deleteTask(taskEntity: Task):Int
 
     @Query ("SELECT * FROM Art")
-    fun getAllArt():MutableList<Art>
+     fun getAllArt():MutableList<Art>
 
     @Query ("SELECT * FROM Art where artId like:id")
-    fun getArtById(id:Long): Art
+     fun getArtById(id:Long): Art
 
     @Transaction
     @Query("SELECT * FROM Task")
-    fun getTaskYArts(): List<TaskYArts>
+    suspend fun getTaskYArts(): List<TaskYArts>
 
     @Insert
     fun addArt(artEntity : Art):Long
 
     @Update
-    fun updateArt(artEntity: Art):Int
+     fun updateArt(artEntity: Art):Int
 
     @Delete
-    fun deleteArt(artEntity: Art):Int
+     fun deleteArt(artEntity: Art):Int
 
 
 

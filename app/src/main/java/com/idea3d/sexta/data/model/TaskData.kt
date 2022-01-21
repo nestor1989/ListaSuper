@@ -1,16 +1,14 @@
 package com.idea3d.sexta.data.model
 
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
 
 
 @Entity
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val taskId:Int=0,
+    @ColumnInfo(name="nombre_task")
     val name:String="",
     var isDone:Boolean=false
 
@@ -20,6 +18,7 @@ data class Task(
 data class Art(
     @PrimaryKey(autoGenerate = true)
                 val artId:Int=0,
+    @ColumnInfo(name="nombre_art")
                 val name:String="",
                 var isDone:Boolean=false)
 

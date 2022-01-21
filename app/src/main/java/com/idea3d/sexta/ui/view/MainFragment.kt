@@ -24,6 +24,7 @@ import com.idea3d.sexta.databinding.FragmentMainBinding
 import com.idea3d.sexta.ui.adapters.TasksAdapter
 import com.idea3d.sexta.ui.viewmodel.SharedViewModel
 import com.idea3d.sexta.ui.viewmodel.VMFactory
+import com.idea3d.sexta.vo.Resource
 
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -34,9 +35,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     lateinit var recyclerView: RecyclerView
-    lateinit var tasks: MutableList<Task>
     lateinit var adapter: TasksAdapter
-
     lateinit var task:Task
     private val viewModel by activityViewModels<SharedViewModel>{
         VMFactory(RepoImp(DataSource())) }
@@ -61,35 +60,26 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       viewModel.allTask.observe(this, Observer {
-            // Update the cached copy of the words in the adapter.
-            tasks?.let { adapter.submitList(it) }
-        })
+        viewModel.getAllTask().observe(viewLifecycleOwner, Observer{
+            when(it){
+                is Resource.Loading->{}
+                is Resource.Success->{
+                    setUpRecyclerView(it.data)
+                }
+                is Resource.Failure->{
 
+                }
+            }
+        }
+        )
 
-
-
-
-        /*binding.btnAddTask.setOnClickListener {
-            viewModel.addTask()
-        addTask(Task(name = etTask.text.toString()))
-        }*/
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.nuevaLista)
         }
 
     }
 
-    suspend fun getTasks() {
-        //doAsync {
-            tasks = TaskApp.database.taskDao().getAll()
-            //uiThread {
-        setUpRecyclerView(tasks)
-            }
-        //}
-    //}
-
-    fun setUpRecyclerView(tasks: MutableList<Task>) {
+    fun setUpRecyclerView(tasks: List<Task>) {
         val appContext = requireContext().applicationContext
         adapter = TasksAdapter(tasks, { viewModel.updateTask(it) }, { viewModel.deleteTask(it) })
         recyclerView = binding.rvTask
@@ -97,13 +87,5 @@ class MainFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(appContext)
         recyclerView.adapter = adapter
     }
-
-
-
-    /*fun clearFocus(){
-        binding.etTask.setText("")
-    }*/
-
-
 
 }
