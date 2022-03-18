@@ -4,7 +4,7 @@ import androidx.room.*
 import com.idea3d.sexta.data.model.Art
 
 import com.idea3d.sexta.data.model.Task
-import com.idea3d.sexta.data.model.TaskYArts
+
 
 
 @Dao
@@ -25,23 +25,26 @@ interface TaskDao {
     suspend fun deleteTask(taskEntity: Task):Int
 
     @Query ("SELECT * FROM Art")
-     fun getAllArt():MutableList<Art>
+    suspend fun getAllArt():MutableList<Art>
 
     @Query ("SELECT * FROM Art where artId like:id")
-     fun getArtById(id:Long): Art
+    suspend fun getArtById(id:Long): Art
 
-    @Transaction
-    @Query("SELECT * FROM Task")
-    suspend fun getTaskYArts(): List<TaskYArts>
+    @Query ("SELECT * FROM Art where id_task like:id")
+    suspend fun getArtByTaskId(id:Long):List<Art>
 
-    @Insert
-    fun addArt(artEntity : Art):Long
+    /*@Transaction
+    @Query("SELECT * FROM Art where taskId")
+    suspend fun getTaskYArts(): List<TaskYArts>*/
+
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addArt(artEntity : Art):Long
 
     @Update
-     fun updateArt(artEntity: Art):Int
+    suspend fun updateArt(artEntity: Art):Int
 
     @Delete
-     fun deleteArt(artEntity: Art):Int
+    suspend fun deleteArt(artEntity: Art):Int
 
 
 

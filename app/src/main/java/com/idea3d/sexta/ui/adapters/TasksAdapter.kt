@@ -7,9 +7,16 @@ import com.idea3d.sexta.data.model.Task
 import com.idea3d.sexta.databinding.ItemTaskBinding
 
 class TasksAdapter(
+    private val itemClickListener:OnTaskClickListener,
     val tasks: List<Task>,
     val checkTask: (Task) -> Unit,
     val deleteTask: (Task) -> Unit) : RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
+
+
+
+    interface OnTaskClickListener{
+        fun onTaskClick(task:Task)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemBinding =
@@ -27,7 +34,7 @@ class TasksAdapter(
         return tasks.size
     }
 
-    class ViewHolder(private val itemBinding:ItemTaskBinding) :
+    inner class ViewHolder(private val itemBinding:ItemTaskBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         val tvTask = itemBinding.tvTask
         val cbIsDone = itemBinding.cbIsDone
@@ -36,8 +43,8 @@ class TasksAdapter(
         fun bind(task: Task, checkTask: (Task) -> Unit, deleteTask: (Task) -> Unit) {
             tvTask.text = task.name
             cbIsDone.isChecked = task.isDone
-            cbIsDone.setOnClickListener { checkTask(task) }
-            itemView.setOnClickListener { deleteTask(task) }
+            //cbIsDone.setOnClickListener { checkTask(task) }
+            itemView.setOnClickListener { itemClickListener.onTaskClick(task) }
         }
     }
 

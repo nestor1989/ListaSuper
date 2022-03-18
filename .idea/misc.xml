@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android-sdk/ListaSuper/ListaSuper/app/src/main/res/layout/fragment_aniadir_productos.xml" value="0.1" />
+        <entry key="..\:/android-sdk/ListaSuper/ListaSuper/app/src/main/res/layout/fragment_editar_lista.xml" value="0.1" />
         <entry key="..\:/android-sdk/Sexta/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/android-sdk/Sexta/app/src/main/res/layout/fragment_aniadir_productos.xml" value="0.18568840579710144" />
         <entry key="..\:/android-sdk/Sexta/app/src/main/res/layout/fragment_crear_lista.xml" value="0.18568840579710144" />

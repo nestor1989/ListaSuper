@@ -15,12 +15,20 @@ class RepoImp (private val dataSource: DataSource):Repo {
         return dataSource.getAllTask()
     }
 
+    override suspend fun getArtByTaskId(taskId:Long): Resource<List<Art>> {
+        return dataSource.getArtByTaskId(taskId)
+    }
+
+    override suspend fun getArtById(id: Long): Art {
+        return dataSource.getArtById(id)
+    }
+
     override suspend fun addTask(task: Task) {
         dataSource.insertTask(task)
     }
 
-    override suspend fun addArt(art: Art) {
-        TODO("Not yet implemented")
+    override suspend fun addArt(art: Art){
+         dataSource.insertArt(art)
     }
 
     override suspend fun updateTask(task: Task) {
@@ -29,6 +37,14 @@ class RepoImp (private val dataSource: DataSource):Repo {
 
     override suspend fun deleteTask(task: Task) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteArt(art: Art) {
+        dataSource.deleteArt(art)
+    }
+
+    override suspend fun updateArt(art: Art) {
+        dataSource.updateArt(art)
     }
 
 

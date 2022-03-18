@@ -19,6 +19,7 @@ import com.idea3d.sexta.core.TaskApp
 import com.idea3d.sexta.data.model.DataSource
 import com.idea3d.sexta.data.model.RepoImp
 import com.idea3d.sexta.data.model.Task
+import com.idea3d.sexta.data.model.TaskDb
 import com.idea3d.sexta.databinding.FragmentMainBinding
 
 import com.idea3d.sexta.ui.adapters.TasksAdapter
@@ -30,7 +31,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), TasksAdapter.OnTaskClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +39,7 @@ class MainFragment : Fragment() {
     lateinit var adapter: TasksAdapter
     lateinit var task:Task
     private val viewModel by activityViewModels<SharedViewModel>{
-        VMFactory(RepoImp(DataSource())) }
+        VMFactory(RepoImp(DataSource(TaskDb.getDataBase(requireActivity().applicationContext)))) }
 
 
 
@@ -81,11 +82,16 @@ class MainFragment : Fragment() {
 
     fun setUpRecyclerView(tasks: List<Task>) {
         val appContext = requireContext().applicationContext
-        adapter = TasksAdapter(tasks, { viewModel.updateTask(it) }, { viewModel.deleteTask(it) })
+        adapter = TasksAdapter(this, tasks, { viewModel.updateTask(it) }, { viewModel.deleteTask(it) })
         recyclerView = binding.rvTask
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(appContext)
         recyclerView.adapter = adapter
+    }
+
+    override fun onTaskClick(task: Task) {
+        viewModel.onTask(task)
+        findNavController().navigate(R.id.editarLista)
     }
 
 }

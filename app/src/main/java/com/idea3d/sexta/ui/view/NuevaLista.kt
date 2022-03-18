@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.idea3d.sexta.R
-import com.idea3d.sexta.data.model.Art
-import com.idea3d.sexta.data.model.DataSource
-import com.idea3d.sexta.data.model.RepoImp
-import com.idea3d.sexta.data.model.Task
+import com.idea3d.sexta.data.model.*
 import com.idea3d.sexta.databinding.FragmentMainBinding
 import com.idea3d.sexta.databinding.FragmentNuevaListaBinding
 import com.idea3d.sexta.ui.adapters.ArtsAdapter
@@ -26,11 +23,8 @@ class NuevaLista : Fragment() {
 
     private var _binding: FragmentNuevaListaBinding? = null
     private val binding get() = _binding!!
-
-
-
     private val viewModel by activityViewModels<SharedViewModel>{
-        VMFactory(RepoImp(DataSource())) }
+        VMFactory(RepoImp(DataSource(TaskDb.getDataBase(requireActivity().applicationContext)))) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +43,10 @@ class NuevaLista : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.botonCrear.setOnClickListener {
-            viewModel.addTask(Task(name = etTask.text.toString()))
-
+            val task=Task(name = etTask.text.toString())
+            viewModel.addTask(task)
+            viewModel.onTask(task)
             findNavController().navigate(R.id.editarLista)
         }
 

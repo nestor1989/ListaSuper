@@ -16,6 +16,9 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel(private val repo: Repo): ViewModel() {
 
+
+    var taskId=MutableLiveData<Long>()
+
     fun getAllTask()= liveData(Dispatchers.IO){
         emit(Resource.Loading())
         try {
@@ -25,11 +28,14 @@ class SharedViewModel(private val repo: Repo): ViewModel() {
         }
     }
 
+    fun onTask(task:Task){
+        taskId.value=task.taskId
+    }
 
-    fun addTask(task: Task){
+    fun addTask(task: Task) {
     viewModelScope.launch {
         repo.addTask(task)
-
+        onTask(task)
         }
     }
 
@@ -42,6 +48,37 @@ class SharedViewModel(private val repo: Repo): ViewModel() {
     fun deleteTask(task: Task){
         viewModelScope.launch {
             repo.deleteTask(task)
+        }
+    }
+
+    fun deleteArt(art:Art){
+        viewModelScope.launch{
+            repo.deleteArt(art)
+        }
+    }
+
+    fun addArt(art: Art){
+        viewModelScope.launch {
+           /* val id = repo.addArt(art)
+            val recoveryArt = TaskApp.database.taskDao().getArtById(id)*/
+            repo.addArt(art)
+        }
+    }
+
+
+
+    fun updateArt(art: Art) {
+        viewModelScope.launch {
+            repo.updateArt(art)
+        }
+    }
+
+    val getArtByTaskId= liveData(Dispatchers.IO) {
+        //emit(Resource.Loading())
+        try {
+            emit(repo.getArtByTaskId(taskId.value!!))
+        }catch (e:Exception){
+            emit(Resource.Failure(e))
         }
     }
 

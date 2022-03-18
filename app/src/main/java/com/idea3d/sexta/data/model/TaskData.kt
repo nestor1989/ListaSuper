@@ -7,9 +7,10 @@ import androidx.room.*
 @Entity
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val taskId:Int=0,
+    var taskId:Long=0,
     @ColumnInfo(name="nombre_task")
     val name:String="",
+    @ColumnInfo(name="is_done")
     var isDone:Boolean=false
 
 )
@@ -17,16 +18,20 @@ data class Task(
 @Entity
 data class Art(
     @PrimaryKey(autoGenerate = true)
-                val artId:Int=0,
+    var artId:Long=0,
     @ColumnInfo(name="nombre_art")
-                val name:String="",
-                var isDone:Boolean=false)
+    val name:String="",
+    @ColumnInfo(name="id_task")
+    val taskId: Long,
+    @ColumnInfo(name="is_done")
+    var isDone:Boolean=false
+)
 
-data class TaskYArts (
+/*data class TaskYArts (
     @Embedded val task: Task,
     @Relation(
          parentColumn = "taskId",
-         entityColumn = "artId",
+         entityColumn = "taskId"
     )
     val art: MutableList<Art>
-)
+)*/

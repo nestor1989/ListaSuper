@@ -1,21 +1,35 @@
 package com.idea3d.sexta.data.model
 
-import com.idea3d.sexta.core.TaskApp
 import com.idea3d.sexta.vo.Resource
 
-class DataSource() {
+class DataSource(private val taskDb: TaskDb) {
 
 
      suspend fun insertTask(task: Task) {
-        TaskApp.database.taskDao().addTask(task)
+        taskDb.taskDao().addTask(task)
     }
 
     suspend fun getAllTask(): Resource<List<Task>>{
-        return Resource.Success(TaskApp.database.taskDao().getAllTask())
+        return Resource.Success(taskDb.taskDao().getAllTask())
+    }
+
+    suspend fun deleteArt(art:Art){
+        taskDb.taskDao().deleteArt(art)
+    }
+
+    suspend fun getArtByTaskId(taskId:Long):Resource<List<Art>>{
+        return Resource.Success(taskDb.taskDao().getArtByTaskId(taskId))
+    }
+
+    suspend fun getArtById(id:Long):Art{
+        return taskDb.taskDao().getArtById(id)
     }
 
      suspend fun insertArt(art: Art){
-        TaskApp.database.taskDao().addArt(art)
+         taskDb.taskDao().addArt(art)
     }
 
+    suspend fun updateArt(art: Art){
+        taskDb.taskDao().updateArt(art)
+    }
 }

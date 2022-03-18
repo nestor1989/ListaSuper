@@ -6,7 +6,7 @@ import com.idea3d.sexta.data.model.TaskDb
 
 class TaskApp: Application() {
 
-    companion object {
+    /*companion object {
         lateinit var database: TaskDb
 
     }
@@ -16,5 +16,5 @@ class TaskApp: Application() {
         TaskApp.database = Room
                 .databaseBuilder(this, TaskDb::class.java, "task")
                 .build()
-    }
+    }*/
 }
